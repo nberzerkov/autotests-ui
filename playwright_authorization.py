@@ -1,31 +1,28 @@
 from playwright.sync_api import sync_playwright, expect
 
+login_page = 'https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/auth/login'
+email = 'user.name@gmail.com'
+password = 'password'
+
 # Запуск Playwright в синхронном режиме
-with sync_playwright() as playwright:
-    # Открываем браузер Chromium (не в headless режиме, чтобы видеть действия)
-    browser = playwright.chromium.launch(headless=False)
-    page = browser.new_page() # Создаем новую страницу
+with sync_playwright() as playwright: # with ... as ... - это контекстный менеджер
+    browser_chromium = playwright.chromium.launch(headless=False)
+    page = browser_chromium.new_page()
 
-    # Переходим на страницу авторизации
-    page.goto('https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/auth/login')
+    page.goto(login_page)
 
-    # Находим поле "Email" и заполняем его
-    email_input = page.locator('//div[@data-testid="login-form-email-input"]//div/input')
-    email_input.fill('user.name@gmail.com')
+    email_input = page.get_by_test_id('login-form-email-input').locator('input')
+    email_input.fill(email)
 
-    # Находим поле "Password" и заполняем его
-    password_input = page.locator('//div[@data-testid="login-form-password-input"]//div/input')
-    password_input.fill('password')
+    password_input = page.get_by_test_id('login-form-password-input').locator('input')
+    password_input.fill(password)
 
-    # Находим кнопку "Login" и кликаем на неё
-    login_btn = page.locator('//button[@data-testid="login-page-login-button"]')
+    login_btn = page.get_by_test_id('login-page-login-button')
     login_btn.click()
 
-    # Проверяем что появилось сообщение об ошибке
-    wrong_email_or_password_alert = page.locator('//div[@data-testid="login-page-wrong-email-or-password-alert"]')
+    wrong_email_or_password_alert = page.get_by_test_id('login-page-wrong-email-or-password-alert')
     expect(wrong_email_or_password_alert).to_be_visible() # Проверяем видимость элемента
-    expect(wrong_email_or_password_alert).to_have_text("Wrong email or password") # Проверяем текст
+    expect(wrong_email_or_password_alert).to_have_text("Wrong email or password")
 
-    # Пауза на 5 секунд, чтобы увидеть результат
-    page.wait_for_timeout(5000)
+    page.wait_for_timeout(1600)
 
