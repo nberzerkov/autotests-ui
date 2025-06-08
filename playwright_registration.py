@@ -1,5 +1,6 @@
 from playwright.sync_api import sync_playwright, expect
 
+# переменные для удобства
 registration_page = 'https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/auth/registration'
 email_data = 'user.name@gmail.com'
 username_data = 'username'
