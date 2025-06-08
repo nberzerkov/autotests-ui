@@ -6,8 +6,8 @@ email_data = 'user.name@gmail.com'
 username_data = 'username'
 password_data = "password"
 
-with sync_playwright() as playwright:
-    browser = playwright.chromium.launch(headless=False)
+with sync_playwright() as p:
+    browser = p.chromium.launch(headless=False)
     page = browser.new_page()
     page.goto(registration_page)
 
