@@ -24,5 +24,5 @@ with sync_playwright() as playwright: # with ... as ... - это контекс�
     expect(wrong_email_or_password_alert).to_be_visible() # Проверяем видимость элемента
     expect(wrong_email_or_password_alert).to_have_text("Wrong email or password")
 
-    page.wait_for_timeout(1600)
+    page.wait_for_timeout(1500)
 
