@@ -1,8 +1,3 @@
-# Открыть страницу https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/auth/login
-# Проверить наличие элементов: "Email", "Password", "Login"
-# Нажать на ссылку "Registration", после чего произойдет редирект на страницу Registration
-# Проверить наличие элементов: "Email", "Password", "Registration"
-
 from playwright.sync_api import sync_playwright, expect
 
 login_page = 'https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/auth/login'
