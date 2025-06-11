@@ -1,15 +1,18 @@
-from playwright.sync_api import sync_playwright, expect
+from playwright.sync_api import sync_playwright
 
 # переменные для удобства
-registration_page = 'https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/auth/registration'
+registration_url = 'https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/auth/registration'
+dashboard_url = 'https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/dashboard'
 email_data = 'user.name@gmail.com'
 username_data = 'username'
 password_data = "password"
 
 with sync_playwright() as p:
     browser = p.chromium.launch(headless=False)
-    page = browser.new_page()
-    page.goto(registration_page)
+    context = browser.new_context()
+    page = context.new_page()
+
+    page.goto(registration_url)
 
     email_input = page.get_by_test_id('registration-form-email-input').locator('input')
     email_input.fill(email_data)
@@ -23,6 +26,17 @@ with sync_playwright() as p:
     registration_btn = page.get_by_test_id('registration-page-registration-button')
     registration_btn.click()
 
-    dashboard_text = page.get_by_test_id('dashboard-toolbar-title-text')
-    expect(dashboard_text).to_be_visible()
-    expect(dashboard_text).to_have_text("Dashboard")
+    context.storage_state(path='browser-state.json')
+
+    # dashboard_text = page.get_by_test_id('dashboard-toolbar-title-text')
+    # expect(dashboard_text).to_be_visible()
+    # expect(dashboard_text).to_have_text("Dashboard")
+
+with sync_playwright() as p:
+    browser = p.chromium.launch(headless=False)
+    context = browser.new_context(storage_state="browser-state.json")
+    page = context.new_page()
+
+    page.goto(dashboard_url)
+
+    page.wait_for_timeout(50000)
