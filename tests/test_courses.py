@@ -26,11 +26,11 @@ def test_empty_courses_list():
         registration_btn = page.get_by_test_id('registration-page-registration-button')
         registration_btn.click()
 
-        context.storage_state(path="registration-state.json")
+        context.storage_state(path="browser-state.json")
 
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=False)
-        context = browser.new_context(storage_state="registration-state.json")
+        context = browser.new_context(storage_state="browser-state.json")
         page = context.new_page()
 
         page.goto(courses_url)
