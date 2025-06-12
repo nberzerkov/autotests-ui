@@ -34,5 +34,3 @@ def test_successful_registration():
         page = context.new_page()
 
         page.goto(dashboard_url)
-
-        page.wait_for_timeout(2000)

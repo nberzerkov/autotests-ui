@@ -1,5 +1,5 @@
 def test_first_try():
-    print('Hello, World!')
+    print('Hello, world!')
 
 # def test_assert_positive_case():
 #     assert(2 + 2) == 4, "2 + 2 равняется 4"
