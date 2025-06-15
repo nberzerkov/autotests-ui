@@ -1,4 +1,5 @@
 from playwright.sync_api import sync_playwright
+import pytest
 
 registration_url = 'https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/auth/registration'
 dashboard_url = 'https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/dashboard'
@@ -6,6 +7,8 @@ email_data = 'user.name@gmail.com'
 username_data = 'username'
 password_data = "password"
 
+@pytest.mark.regression
+@pytest.mark.registration
 def test_successful_registration():
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=False)

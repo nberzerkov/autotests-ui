@@ -1,9 +1,12 @@
 from playwright.sync_api import sync_playwright, expect
+import pytest
 
 login_page = 'https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/auth/login'
 email = 'user.name@gmail.com'
 password = 'password'
 
+@pytest.mark.regression
+@pytest.mark.authorization
 def test_wrong_email_or_password_authorization():
     with sync_playwright() as playwright: # with ... as ... - это контекстный менеджер
         browser_chromium = playwright.chromium.launch(headless=False)
