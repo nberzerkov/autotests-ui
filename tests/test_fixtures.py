@@ -18,7 +18,6 @@ def user():
 
 # Фикстура для открытия браузера, выполняющаяся для каждого теста
 @pytest.fixture(scope='function')
-@pytest.fixture(scope="function")
 def browser():
     print("[FUNCTION] Открываем браузер на каждый автотест")
 
