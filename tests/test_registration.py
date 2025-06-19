@@ -26,35 +26,3 @@ def test_successful_registration(chromium_page: Page):
 
         dashboard_title = chromium_page.get_by_test_id('dashboard-toolbar-title-text')
         expect(dashboard_title).to_be_visible()
-
-
-# @pytest.mark.regression
-# @pytest.mark.registration
-# def test_successful_registration(chromium_page: Page):
-#     with sync_playwright() as p:
-#         browser = p.chromium.launch(headless=False)
-#         context = browser.new_context()
-#         page = context.new_page()
-#
-#         page.goto(registration_url)
-#
-#         email_input = page.get_by_test_id('registration-form-email-input').locator('input')
-#         email_input.fill(email_data)
-#
-#         username_input = page.get_by_test_id('registration-form-username-input').locator('input')
-#         username_input.fill(username_data)
-#
-#         password_input = page.get_by_test_id('registration-form-password-input').locator('input')
-#         password_input.fill(password_data)
-#
-#         registration_btn = page.get_by_test_id('registration-page-registration-button')
-#         registration_btn.click()
-#
-#         context.storage_state(path='browser-state.json')
-#
-#     with sync_playwright() as p:
-#         browser = p.chromium.launch(headless=False)
-#         context = browser.new_context(storage_state="browser-state.json")
-#         page = context.new_page()
-#
-#         page.goto(dashboard_url)
