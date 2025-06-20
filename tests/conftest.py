@@ -33,6 +33,8 @@ def initialize_browser_state(playwright: Playwright):
     registration_btn.click()
 
     context.storage_state(path="browser-state.json")
+    yield
+    browser.close()
 
 @pytest.fixture
 def chromium_page_with_state(initialize_browser_state, playwright: Playwright) -> Page:
