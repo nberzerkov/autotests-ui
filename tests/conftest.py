@@ -11,6 +11,7 @@ password_data = "password"
 def chromium_page(playwright: Playwright) -> Page:
     browser = playwright.chromium.launch(headless=False)
     yield browser.new_page()
+    browser.close()
 
 @pytest.fixture(scope='session')
 def initialize_browser_state(playwright: Playwright):
@@ -33,7 +34,6 @@ def initialize_browser_state(playwright: Playwright):
     registration_btn.click()
 
     context.storage_state(path="browser-state.json")
-    yield
     browser.close()
 
 @pytest.fixture

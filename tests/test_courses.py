@@ -1,5 +1,5 @@
 import pytest
-from playwright.sync_api import expect
+from playwright.sync_api import expect, Page
 
 registration_url = 'https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/auth/registration'
 courses_url = 'https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/courses'
@@ -7,10 +7,9 @@ email_data = 'user.name@gmail.com'
 username_data = 'username'
 password_data = "password"
 
-
-@pytest.mark.regression
 @pytest.mark.courses
-def test_empty_courses_list(chromium_page_with_state):
+@pytest.mark.regression
+def test_empty_courses_list(chromium_page_with_state: Page):
     chromium_page_with_state.goto(courses_url)
 
     courses_toolbar_title = chromium_page_with_state.get_by_test_id('courses-list-toolbar-title-text')
