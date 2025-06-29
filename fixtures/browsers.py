@@ -9,7 +9,7 @@ password_data = "password"
 
 @pytest.fixture
 def chromium_page(playwright: Playwright) -> Page:
-    browser = playwright.chromium.launch(headless=False)
+    browser = playwright.chromium.launch(headless=True)
     yield browser.new_page()
     browser.close()
 

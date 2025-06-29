@@ -43,7 +43,6 @@ users = {
     "+70000000033": "User with operations on bank account"
 }
 
-
 @pytest.mark.parametrize("phone_number", users.keys(), ids=lambda phone_number: f"{phone_number}: {users[phone_number]}")
 def test_identifiers(phone_number: str) -> None:
     pass
