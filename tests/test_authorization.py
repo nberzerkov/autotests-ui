@@ -9,7 +9,6 @@ authCreds = [
     ("  ", "password")
 ]
 
-
 @pytest.mark.regression
 @pytest.mark.authorization
 @pytest.mark.parametrize('email, password',
