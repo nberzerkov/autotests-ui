@@ -21,7 +21,6 @@ def user():
 def browser():
     print("[FUNCTION] Открываем браузер на каждый автотест")
 
-
 class TestUserFlow:
     def test_user_can_login(self, settings, user, browser):
         pass
