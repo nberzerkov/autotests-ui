@@ -13,6 +13,7 @@ class LoginPage(BasePage):
         self.registration_link = page.get_by_test_id("login-page-registration-link")
 
     # Метод для заполнения формы авторизации
+    # Стандарт именования метода в формате: {action}_{context}_{element_type}
     def fill_login_form(self, email: str, password: str):
         self.email_input.fill(email)
         expect(self.email_input).to_have_value(email)
