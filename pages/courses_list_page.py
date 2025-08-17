@@ -1,6 +1,6 @@
 from playwright.sync_api import Page, expect
 from pages.base_page import BasePage
-from dataclasses.check_visible_course_card_params import CheckVisibleCourseCardParams
+from dataclasses.check_visible_course_card_params import CourseCardParams
 
 class CoursesListPage(BasePage):
     def __init__(self, page: Page):
@@ -47,12 +47,12 @@ class CoursesListPage(BasePage):
         expect(self.empty_view_description).to_have_text("Results from the load test pipeline will be displayed here")
 
     def check_visible_course_card(
-            self, params: CheckVisibleCourseCardParams
+            self, params: CourseCardParams
     ):
-        expect(self.course_img.nth(params.index)).to_be_visible()
-
         expect(self.course_title.nth(params.index)).to_be_visible()
         expect(self.course_title.nth(params.index)).to_have_text(params.title)
+
+        expect(self.course_img.nth(params.index)).to_be_visible()
 
         expect(self.course_max_score.nth(params.index)).to_be_visible()
         expect(self.course_max_score.nth(params.index)).to_have_text(f"Max score: {params.max_score}")
