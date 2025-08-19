@@ -142,5 +142,37 @@ class CreateCoursePage(BasePage):
         expect(self.exercise_empty_view_description).to_be_visible()
         expect(self.exercise_empty_view_description).to_have_text('Click on "Create exercise" button to create new exercise')
 
-    # Осталось написать тесты на создание динамических упражнений. Видео 12:29
-    # https://stepik.org/lesson/1450245/step/5?unit=1469214
+    # Блок с созданием динамических упражнений (#1 Exercise)
+    def check_visible_exercise_form(self, params: CourseCardParams):
+        exercise_subtitle_text = self.page.get_by_test_id(f"create-course-exercise-{params.index}-box-toolbar-subtitle-text")
+        exercise_form_title_input = self.page.get_by_test_id(f"create-course-exercise-form-title-{params.index}-input")
+        exercise_form_description_input = self.page.get_by_test_id(
+            f"create-course-exercise-form-description-{params.index}-input")
+
+        expect(exercise_subtitle_text).to_be_visible()
+        expect(exercise_subtitle_text).to_have_text(f"#{params.index + 1} Exercises")
+
+        expect(exercise_form_title_input).to_be_visible()
+        expect(exercise_form_title_input).to_have_value(params.title)
+
+        expect(exercise_form_description_input).to_be_visible()
+        expect(exercise_form_description_input).to_have_value(params.description)
+
+    def fill_create_exercise_form(self, params: CourseCardParams):
+        exercise_form_title_input = self.page.get_by_test_id(f"create-course-exercise-form-title-{params.index}-input")
+        exercise_form_description_input = self.page.get_by_test_id(
+            f"create-course-exercise-form-description-{params.index}-input")
+
+        expect(exercise_form_title_input).fill(params.title)
+        expect(exercise_form_title_input).to_have_text(params.title)
+
+        expect(exercise_form_description_input).fill(params.description)
+        expect(exercise_form_description_input).to_have_value(params.description)
+
+    def click_delete_exercise_btn(self, params: CourseCardParams):
+        delete_exercise_btn = self.page.get_by_test_id(
+            f"create-course-exercise-{params.index}-box-toolbar-delete-exercise-button")
+
+        delete_exercise_btn.click()
+
+
