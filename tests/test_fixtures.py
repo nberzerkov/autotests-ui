@@ -10,7 +10,6 @@ def send_analytics_data():
 def settings():
     print("[SESSION] Инициализируем настройки автотестов")
 
-
 # Фикстура для создания данных пользователя, которая будет выполняться один раз на класс тестов
 @pytest.fixture(scope="class")
 def user():

@@ -1,6 +1,5 @@
 from playwright.sync_api import Page, expect
 from pages.base_page import BasePage
-from dataclasses.check_visible_course_card_params import CourseCardParams
 
 class CoursesListPage(BasePage):
     def __init__(self, page: Page):
@@ -47,21 +46,20 @@ class CoursesListPage(BasePage):
         expect(self.empty_view_description).to_have_text("Results from the load test pipeline will be displayed here")
 
     def check_visible_course_card(
-            self, params: CourseCardParams
-    ):
-        expect(self.course_title.nth(params.index)).to_be_visible()
-        expect(self.course_title.nth(params.index)).to_have_text(params.title)
+            self, index: int, title: str = "", estimate_time: int = 0, max_score: str = "", min_score: str = ""):
+        expect(self.course_title.nth(index)).to_be_visible()
+        expect(self.course_title).to_have_text(title)
 
-        expect(self.course_img.nth(params.index)).to_be_visible()
+        expect(self.course_img.nth(index)).to_be_visible()
 
-        expect(self.course_max_score.nth(params.index)).to_be_visible()
-        expect(self.course_max_score.nth(params.index)).to_have_text(f"Max score: {params.max_score}")
+        expect(self.course_max_score.nth(index)).to_be_visible()
+        expect(self.course_max_score.nth(index)).to_have_text(f"Max score: {max_score}")
 
-        expect(self.course_min_score.nth(params.index)).to_be_visible()
-        expect(self.course_min_score.nth(params.index)).to_have_text(f"Min score: {params.min_score}")
+        expect(self.course_min_score.nth(index)).to_be_visible()
+        expect(self.course_min_score.nth(index)).to_have_text(f"Min score: {min_score}")
 
-        expect(self.course_estimate_time.nth(params.index)).to_be_visible()
-        expect(self.course_estimate_time.nth(params.index)).to_have_text(f"Estimated time: {params.estimate_time}")
+        expect(self.course_estimate_time.nth(index)).to_be_visible()
+        expect(self.course_estimate_time.nth(index)).to_have_text(f"Estimated time: {estimate_time}")
 
     def click_edit_course(self, index: int):
         expect(self.course_menu_btn.nth(index)).to_be_visible()
