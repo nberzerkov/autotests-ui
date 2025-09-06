@@ -26,7 +26,6 @@ def test_empty_courses_list(chromium_page_with_state: Page):
     expect(courses_empty_description_text).to_be_visible()
     expect(courses_empty_description_text).to_have_text('Results from the load test pipeline will be displayed here')
 
-
 @pytest.mark.courses
 @pytest.mark.regression
 def test_create_course(create_course_page: CreateCoursePage, courses_list_page: CoursesListPage):

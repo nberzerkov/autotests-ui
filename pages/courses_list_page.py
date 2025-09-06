@@ -1,9 +1,12 @@
 from playwright.sync_api import Page, expect
 from pages.base_page import BasePage
+from components.navigation.navbar_component import NavbarComponent
 
 class CoursesListPage(BasePage):
     def __init__(self, page: Page):
         super().__init__(page)
+
+        self.navbar = NavbarComponent(page)
 
         # Заголовок и кнопка создания курса
         self.courses_title = page.get_by_test_id("courses-list-toolbar-title-text")
@@ -30,6 +33,8 @@ class CoursesListPage(BasePage):
         expect(self.courses_title).to_be_visible()
         expect(self.courses_title).to_have_text("Courses")
 
+        self.navbar.check_visible("username")
+
     def check_visible_create_course_btn(self):
         expect(self.create_course_btn).to_be_visible()
 
@@ -46,7 +51,7 @@ class CoursesListPage(BasePage):
         expect(self.empty_view_description).to_have_text("Results from the load test pipeline will be displayed here")
 
     def check_visible_course_card(
-            self, index: int, title: str = "", estimate_time: int = 0, max_score: str = "", min_score: str = ""):
+            self, index: int, title: str = "", estimate_time: int = "", max_score: str = "", min_score: str = ""):
         expect(self.course_title.nth(index)).to_be_visible()
         expect(self.course_title).to_have_text(title)
 
