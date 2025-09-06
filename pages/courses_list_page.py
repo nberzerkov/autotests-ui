@@ -51,7 +51,7 @@ class CoursesListPage(BasePage):
         expect(self.empty_view_description).to_have_text("Results from the load test pipeline will be displayed here")
 
     def check_visible_course_card(
-            self, index: int, title: str = "", estimate_time: int = "", max_score: str = "", min_score: str = ""):
+            self, index: int, title: str = "", estimate_time: str = "", max_score: str = "", min_score: str = ""):
         expect(self.course_title.nth(index)).to_be_visible()
         expect(self.course_title).to_have_text(title)
 
