@@ -12,10 +12,11 @@ class SideBarListItemComponent(BaseComponent):
 
     def check_visible(self, title: str):
         expect(self.icon).to_be_visible()
-        expect(self.btn).to_be_visible()
 
         expect(self.title).to_be_visible()
         expect(self.title).to_have_text(title)
+
+        expect(self.btn).to_be_visible()
 
     def navigate_to(self, expected_url: Pattern[str]):
         self.btn.click()
