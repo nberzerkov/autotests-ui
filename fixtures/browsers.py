@@ -4,7 +4,7 @@ from playwright.sync_api import Page, Playwright
 registration_url = 'https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/auth/registration'
 courses_url = 'https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/courses'
 email_data = 'user.name@gmail.com'
-username_data = 'username'
+username_data = 'nikita'
 password_data = "password"
 
 @pytest.fixture
