@@ -2,6 +2,7 @@ from pages.base_page import BasePage
 from playwright.sync_api import Page, expect
 from components.navigation.navbar_component import NavbarComponent
 from components.navigation.sidebar_component import SidebarComponent
+from components.views.empty_view_component import EmptyViewComponent
 
 class CoursesListPage(BasePage):
     def __init__(self, page: Page):
@@ -9,15 +10,11 @@ class CoursesListPage(BasePage):
 
         self.navbar = NavbarComponent(page)
         self.sidebar = SidebarComponent(page)
+        self.empty_view = EmptyViewComponent(page, "courses-list")
 
         # Заголовок и кнопка создания курса
         self.courses_title = page.get_by_test_id("courses-list-toolbar-title-text")
         self.create_course_btn = page.get_by_test_id("courses-list-toolbar-create-course-button")
-
-        # Пустой блок при отсутствии курсов
-        self.empty_view_icon = page.get_by_test_id("courses-list-empty-view-icon")
-        self.empty_view_title = page.get_by_test_id("courses-list-empty-view-title-text")
-        self.empty_view_description = page.get_by_test_id("courses-list-empty-view-description-text")
 
         # Карточка курса
         self.course_title = page.get_by_test_id("course-widget-title-text")
@@ -42,13 +39,10 @@ class CoursesListPage(BasePage):
         self.create_course_btn.click()
 
     def check_visible_empty_view(self):
-        expect(self.empty_view_icon).to_be_visible()
-
-        expect(self.empty_view_title).to_be_visible()
-        expect(self.empty_view_title).to_have_text("There is no results")
-
-        expect(self.empty_view_description).to_be_visible()
-        expect(self.empty_view_description).to_have_text("Results from the load test pipeline will be displayed here")
+        self.empty_view.check_visible(
+            title="There is no results",
+            description="Results from the load test pipeline will be displayed here"
+        )
 
     def check_visible_course_card(
             self, index: int, title: str = "", estimate_time: str = "", max_score: str = "", min_score: str = ""):

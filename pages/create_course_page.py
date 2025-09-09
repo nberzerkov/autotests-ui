@@ -1,19 +1,17 @@
-from playwright.sync_api import Page, expect
 from pages.base_page import BasePage
+from playwright.sync_api import Page, expect
+from components.views.empty_view_component import EmptyViewComponent
 
 class CreateCoursePage(BasePage):
     def __init__(self, page: Page):
         super().__init__(page)
 
+        self.preview_empty_view = EmptyViewComponent(page, "create-course-preview")
+        self.exercises_empty_view = EmptyViewComponent(page, "create-course-exercises")
+
         # Заголовок и кнопка создания курса
         self.create_course_title = page.get_by_test_id("create-course-toolbar-title-text")
         self.create_course_btn = page.get_by_test_id("create-course-toolbar-create-course-button")
-
-        # Блок отображения превью когда картинка не загружена и когда картинка загружена
-        self.preview_empty_view_icon = page.get_by_test_id("create-course-preview-empty-view-icon")
-        self.preview_empty_view_title = page.get_by_test_id("create-course-preview-empty-view-title-text")
-        self.preview_empty_view_description = page.get_by_test_id("create-course-preview-empty-view-description-text")
-        self.preview_img_view = page.get_by_test_id("create-course-preview-image-upload-widget-preview-image")
 
         # Блок загрузки фотографий с кнопкой upload и remove
         self.preview_img_upload_icon = page.get_by_test_id("create-course-preview-image-upload-widget-info-icon")
@@ -21,6 +19,7 @@ class CreateCoursePage(BasePage):
         self.preview_img_upload_description = page.get_by_test_id("create-course-preview-image-upload-widget-info-description-text")
         self.preview_img_upload_btn = page.get_by_test_id("create-course-preview-image-upload-widget-input")
         self.preview_img_remove_btn = page.get_by_test_id("create-course-preview-image-upload-widget-remove-button")
+        self.preview_img_upload_input = page.get_by_test_id('create-course-preview-image-upload-widget-input')
 
         # Поле с инпутами для заполнения инфо по курсу
         self.create_course_form_title_input = page.get_by_test_id("create-course-form-title-input").locator("input")
@@ -32,11 +31,6 @@ class CreateCoursePage(BasePage):
         # Заголовок и кнопка создания упражнения
         self.exercise_title_text = page.get_by_test_id("create-course-exercises-box-toolbar-title-text")
         self.create_exercise_btn = page.get_by_test_id("create-course-exercises-box-toolbar-create-exercise-button")
-
-        # Блок с empty view упражнения
-        self.exercise_empty_view_icon = page.get_by_test_id("create-course-exercises-empty-view-icon")
-        self.exercise_empty_view_title_text = page.get_by_test_id("create-course-exercises-empty-view-title-text")
-        self.exercise_empty_view_description = page.get_by_test_id("create-course-exercises-empty-view-description-text")
 
     # Методы для заголовка и кнопки создания курса
     def check_visible_create_course_title(self):
@@ -55,13 +49,10 @@ class CreateCoursePage(BasePage):
 
     # Блок для пустого превью img
     def check_visible_img_preview_empty_view(self):
-        expect(self.preview_empty_view_icon).to_be_visible()
-
-        expect(self.preview_empty_view_title).to_be_visible()
-        expect(self.preview_empty_view_title).to_have_text("No image selected")
-
-        expect(self.preview_empty_view_description).to_be_visible()
-        expect(self.preview_empty_view_description).to_have_text("Preview of selected image will be displayed here")
+        self.preview_empty_view.check_visible(
+            title="No image selected",
+            description="Preview of selected image will be displayed here"
+        )
 
     # Методы для работы с блоком загрузки фото и проверка, что img загружен
     def check_visible_image_upload_view(self, is_img_uploaded: bool = False):
@@ -78,14 +69,11 @@ class CreateCoursePage(BasePage):
         if is_img_uploaded:
             expect(self.preview_img_remove_btn).to_be_visible()
 
-    def check_visible_preview_img(self):
-        expect(self.preview_img_view).to_be_visible()
-
     def click_remove_img_btn(self):
         self.preview_img_remove_btn.click()
 
     def upload_preview_img(self, file: str):
-        self.preview_img_upload_btn.set_input_files(file)
+        self.preview_img_upload_input.set_input_files(file)
 
     # Проверка формы создания курса
     def check_visible_create_course_form(self,
@@ -137,13 +125,10 @@ class CreateCoursePage(BasePage):
 
     # Блок с empty view упражнения
     def check_visible_exercise_empty_view(self):
-        expect(self.exercise_empty_view_icon).to_be_visible()
-
-        expect(self.exercise_empty_view_title_text).to_be_visible()
-        expect(self.exercise_empty_view_title_text).to_have_text("There is no exercises")
-
-        expect(self.exercise_empty_view_description).to_be_visible()
-        expect(self.exercise_empty_view_description).to_have_text('Click on "Create exercise" button to create new exercise')
+        self.exercises_empty_view.check_visible(
+            title="There is no exercises",
+            description="Click on \"Create exercise\" button to create new exercise"
+        )
 
     # Блок с созданием динамических упражнений (#1 Exercise)
     def check_visible_exercise_form(self, index: int = 0, title: str = "", description: str = ""):
