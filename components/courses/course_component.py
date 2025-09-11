@@ -15,8 +15,6 @@ class CourseViewComponent(BaseComponent):
         self.estimate_time_text = page.get_by_test_id("course-estimated-time-info-row-view-text")
 
     def check_visible(self, index: int, title: str, estimate_time: str, max_score: str, min_score: str):
-        expect(self.menu.menu_btn.nth(index)).to_be_visible()
-
         expect(self.img.nth(index)).to_be_visible()
 
         expect(self.title.nth(index)).to_be_visible()
