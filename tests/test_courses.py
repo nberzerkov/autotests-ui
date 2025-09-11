@@ -1,6 +1,4 @@
 import pytest
-from playwright.sync_api import expect, Page
-
 from pages.create_course_page import CreateCoursePage
 from pages.courses_list_page import CoursesListPage
 
@@ -41,6 +39,7 @@ def test_create_course(create_course_page: CreateCoursePage, courses_list_page: 
 
     create_course_page.upload_preview_img("./testdata/files/image.png")
     create_course_page.check_visible_image_upload_view(is_img_uploaded=True)
+    create_course_page.check_visible_preview_image()
 
     create_course_page.fill_create_course_form("Playwright", "2 week", "Playwright", "100", "10" )
     create_course_page.check_visible_create_exercise_btn()
@@ -48,4 +47,5 @@ def test_create_course(create_course_page: CreateCoursePage, courses_list_page: 
 
     courses_list_page.check_visible_courses_title()
     courses_list_page.check_visible_create_course_btn()
-    courses_list_page.check_visible_course_card(0, "Playwright", "2 week", "100", "10")
+    courses_list_page.course_view.check_visible(0, "Playwright", "2 week", "100", "10")
+

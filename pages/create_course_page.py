@@ -13,6 +13,9 @@ class CreateCoursePage(BasePage):
         self.create_course_title = page.get_by_test_id("create-course-toolbar-title-text")
         self.create_course_btn = page.get_by_test_id("create-course-toolbar-create-course-button")
 
+        # Загруженный img в блоке preview
+        self.preview_img = page.get_by_test_id("create-course-preview-image-upload-widget-preview-image")
+
         # Блок загрузки фотографий с кнопкой upload и remove
         self.preview_img_upload_icon = page.get_by_test_id("create-course-preview-image-upload-widget-info-icon")
         self.preview_img_upload_title = page.get_by_test_id("create-course-preview-image-upload-widget-info-title-text")
@@ -71,6 +74,9 @@ class CreateCoursePage(BasePage):
 
     def click_remove_img_btn(self):
         self.preview_img_remove_btn.click()
+
+    def check_visible_preview_image(self):
+        expect(self.preview_img).to_be_visible()
 
     def upload_preview_img(self, file: str):
         self.preview_img_upload_input.set_input_files(file)
