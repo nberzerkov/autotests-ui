@@ -1,10 +1,11 @@
 from pages.base_page import BasePage
 from playwright.sync_api import Page, expect
-from components.views.empty_view_component import EmptyViewComponent
-from components.views.img_upload_widget_component import ImgUploadWidgetComponent
-from components.courses.create_course_exercise_form_component import CreateCourseExerciseFormComponent
 from components.navigation.navbar_component import NavbarComponent
 from components.navigation.sidebar_component import SidebarComponent
+from components.views.empty_view_component import EmptyViewComponent
+from components.views.img_upload_widget_component import ImgUploadWidgetComponent
+from components.courses.create_course_toolbar_view_component import CreateCourseToolbarViewComponent
+from components.courses.create_course_exercise_form_component import CreateCourseExerciseFormComponent
 
 class CreateCoursePage(BasePage):
     def __init__(self, page: Page):
@@ -12,13 +13,10 @@ class CreateCoursePage(BasePage):
 
         self.navbar = NavbarComponent(page)
         self.sidebar = SidebarComponent(page)
-        self.create_course_exercise_form = CreateCourseExerciseFormComponent(page)
+        self.create_exercise_form = CreateCourseExerciseFormComponent(page)
         self.exercises_empty_view = EmptyViewComponent(page, "create-course-exercises")
         self.img_upload_widget = ImgUploadWidgetComponent(page, "create-course-preview")
-
-        # Заголовок и кнопка создания курса
-        self.create_course_title = page.get_by_test_id("create-course-toolbar-title-text")
-        self.create_course_btn = page.get_by_test_id("create-course-toolbar-create-course-button")
+        self.toolbar = CreateCourseToolbarViewComponent(page)
 
         # Поле с инпутами для заполнения инфо по курсу
         self.create_course_form_title_input = page.get_by_test_id("create-course-form-title-input").locator("input")
@@ -30,21 +28,6 @@ class CreateCoursePage(BasePage):
         # Заголовок и кнопка создания упражнения
         self.exercise_title_text = page.get_by_test_id("create-course-exercises-box-toolbar-title-text")
         self.create_exercise_btn = page.get_by_test_id("create-course-exercises-box-toolbar-create-exercise-button")
-
-    # Методы для заголовка и кнопки создания курса
-    def check_visible_create_course_title(self):
-        expect(self.create_course_title).to_be_visible()
-        expect(self.create_course_title).to_have_text("Create course")
-
-    def check_visible_create_course_disabled_btn(self):
-        expect(self.create_course_btn).to_be_visible()
-
-    def check_disabled_create_course_btn(self):
-        self.create_course_btn.wait_for(state="attached")
-        expect(self.create_course_btn).to_be_disabled()
-
-    def click_create_course_btn(self):
-        self.create_course_btn.click()
 
     # Проверка формы создания курса
     def check_visible_create_course_form(self,

@@ -1,7 +1,6 @@
 from playwright.sync_api import expect
 from components.base_component import BaseComponent
 
-
 class CreateCourseExerciseFormComponent(BaseComponent):
 
     def check_visible(self, index: int = 0, title: str = "", description: str = ""):

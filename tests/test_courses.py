@@ -21,10 +21,7 @@ def test_empty_courses_list(courses_list_page: CoursesListPage):
 def test_create_course(create_course_page: CreateCoursePage, courses_list_page: CoursesListPage):
     create_course_page.visit(CREATE_COURSE_URL)
 
-    create_course_page.check_visible_create_course_title()
-
-    create_course_page.check_visible_create_course_disabled_btn()
-    create_course_page.check_disabled_create_course_btn()
+    create_course_page.toolbar.check_visible(is_create_course_disabled=True)
 
     create_course_page.img_upload_widget.check_visible(is_img_uploaded=False)
 
@@ -39,7 +36,8 @@ def test_create_course(create_course_page: CreateCoursePage, courses_list_page: 
 
     create_course_page.fill_create_course_form("Playwright", "2 week", "Playwright", "100", "10" )
     create_course_page.check_visible_create_exercise_btn()
-    create_course_page.click_create_course_btn()
+    create_course_page.toolbar.check_visible(is_create_course_disabled=False)
+    create_course_page.toolbar.click_create_course_btn()
 
     courses_list_page.toolbar_view.check_visible()
     courses_list_page.course_view.check_visible(0, "Playwright", "2 week", "100", "10")
