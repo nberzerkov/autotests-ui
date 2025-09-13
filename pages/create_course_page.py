@@ -6,6 +6,7 @@ from components.views.empty_view_component import EmptyViewComponent
 from components.views.img_upload_widget_component import ImgUploadWidgetComponent
 from components.courses.create_course_toolbar_view_component import CreateCourseToolbarViewComponent
 from components.courses.create_course_exercise_form_component import CreateCourseExerciseFormComponent
+from components.courses.create_course_exercises_toolbar_view_component import CreateCourseExercisesToolbarViewComponent
 
 class CreateCoursePage(BasePage):
     def __init__(self, page: Page):
@@ -17,6 +18,7 @@ class CreateCoursePage(BasePage):
         self.exercises_empty_view = EmptyViewComponent(page, "create-course-exercises")
         self.img_upload_widget = ImgUploadWidgetComponent(page, "create-course-preview")
         self.toolbar = CreateCourseToolbarViewComponent(page)
+        self.exercises_toolbar = CreateCourseExercisesToolbarViewComponent(page)
 
         # Поле с инпутами для заполнения инфо по курсу
         self.create_course_form_title_input = page.get_by_test_id("create-course-form-title-input").locator("input")
@@ -24,10 +26,6 @@ class CreateCoursePage(BasePage):
         self.create_course_form_description_textarea = page.get_by_test_id("create-course-form-description-input").locator("textarea").first
         self.create_course_form_max_score_input = page.get_by_test_id("create-course-form-max-score-input").locator("input")
         self.create_course_form_min_score_input = page.get_by_test_id("create-course-form-min-score-input").locator("input")
-
-        # Заголовок и кнопка создания упражнения
-        self.exercise_title_text = page.get_by_test_id("create-course-exercises-box-toolbar-title-text")
-        self.create_exercise_btn = page.get_by_test_id("create-course-exercises-box-toolbar-create-exercise-button")
 
     # Проверка формы создания курса
     def check_visible_create_course_form(self,
@@ -65,18 +63,7 @@ class CreateCoursePage(BasePage):
 
         self.create_course_form_min_score_input.fill(min_score)
         expect(self.create_course_form_min_score_input).to_have_value(min_score)
-
-    # Заголовок и кнопка создания упражнения
-    def check_visible_exercise_title(self):
-        expect(self.exercise_title_text).to_be_visible()
-        expect(self.exercise_title_text).to_have_text("Exercises")
-
-    def check_visible_create_exercise_btn(self):
-        expect(self.create_exercise_btn).to_be_visible()
-
-    def click_create_exercise_btn(self):
-        self.create_exercise_btn.click()
-
+        
     # Блок с empty view упражнения
     def check_visible_exercise_empty_view(self):
         self.exercises_empty_view.check_visible(
