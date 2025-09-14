@@ -15,12 +15,12 @@ class CreateCoursePage(BasePage):
 
         self.navbar = NavbarComponent(page)
         self.sidebar = SidebarComponent(page)
-        self.create_exercise_form = CreateCourseExerciseFormComponent(page)
         self.exercises_empty_view = EmptyViewComponent(page, "create-course-exercises")
         self.img_upload_widget = ImgUploadWidgetComponent(page, "create-course-preview")
         self.toolbar = CreateCourseToolbarViewComponent(page)
-        self.exercises_toolbar = CreateCourseExercisesToolbarViewComponent(page)
         self.form = CreateCourseFormComponent(page)
+        self.exercises_toolbar = CreateCourseExercisesToolbarViewComponent(page)
+        self.create_exercise_form = CreateCourseExerciseFormComponent(page)
         
     # Блок с empty view упражнения
     def check_visible_exercise_empty_view(self):

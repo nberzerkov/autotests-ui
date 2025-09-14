@@ -1,3 +1,4 @@
+import re
 import pytest
 from pages.create_course_page import CreateCoursePage
 from pages.courses_list_page import CoursesListPage
@@ -13,7 +14,7 @@ def test_empty_courses_list(courses_list_page: CoursesListPage):
     courses_list_page.navbar.check_visible("nikita")
     courses_list_page.sidebar.check_visible()
 
-    courses_list_page.toolbar_view.check_visible()
+    courses_list_page.toolbar.check_visible()
     courses_list_page.check_visible_empty_view()
 
 @pytest.mark.courses
@@ -26,7 +27,7 @@ def test_create_course(create_course_page: CreateCoursePage, courses_list_page: 
     create_course_page.img_upload_widget.check_visible(is_img_uploaded=False)
 
     create_course_page.form.check_visible()
-    
+
     create_course_page.exercises_toolbar.check_visible()
     create_course_page.check_visible_exercise_empty_view()
 
@@ -34,10 +35,10 @@ def test_create_course(create_course_page: CreateCoursePage, courses_list_page: 
     create_course_page.img_upload_widget.check_visible(is_img_uploaded=True)
 
     create_course_page.form.fill(title="Playwright", estimate_time="2 week", description="Playwright", max_score="100", min_score="10")
-    create_course_page.exercises_toolbar.check_visible()
     create_course_page.toolbar.check_visible(is_create_course_disabled=False)
     create_course_page.toolbar.click_create_course_btn()
 
-    courses_list_page.toolbar_view.check_visible()
+    courses_list_page.toolbar.check_visible()
+    courses_list_page.toolbar.check_current_url(re.compile(".*/#/courses"))
     courses_list_page.course_view.check_visible(index=0, title="Playwright", estimate_time="2 week", max_score="100", min_score="10")
 

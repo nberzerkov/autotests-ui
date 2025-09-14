@@ -14,7 +14,7 @@ class CoursesListPage(BasePage):
         self.sidebar = SidebarComponent(page)
         self.empty_view = EmptyViewComponent(page, "courses-list")
         self.course_view = CourseViewComponent(page)
-        self.toolbar_view = CoursesListToolbarViewComponent(page)
+        self.toolbar = CoursesListToolbarViewComponent(page)
 
     def check_visible_empty_view(self):
         self.empty_view.check_visible(

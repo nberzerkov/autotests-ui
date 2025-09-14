@@ -3,7 +3,7 @@ from pages.base_page import BasePage
 from components.navigation.navbar_component import NavbarComponent
 from components.navigation.sidebar_component import SidebarComponent
 from components.dashboard.dashboard_toolbar_view_component import DashboardToolbarViewComponent
-from components.dashboard.chart_view_component import ChartViewComponent
+from components.charts.chart_view_component import ChartViewComponent
 
 class DashboardPage(BasePage):
     def __init__(self, page: Page):
