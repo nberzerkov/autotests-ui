@@ -41,4 +41,3 @@ def test_create_course(create_course_page: CreateCoursePage, courses_list_page: 
     courses_list_page.toolbar.check_visible()
     courses_list_page.toolbar.check_current_url(re.compile(".*/#/courses"))
     courses_list_page.course_view.check_visible(index=0, title="Playwright", estimate_time="2 week", max_score="100", min_score="10")
-
