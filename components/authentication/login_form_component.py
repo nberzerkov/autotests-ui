@@ -8,7 +8,7 @@ class LoginFormComponent(BaseComponent):
         self.email_input = page.get_by_test_id("login-form-email-input").locator('input')
         self.password_input = page.get_by_test_id("login-form-password-input").locator('input')
 
-    def check_visible(self, email: str = None, password: str = None):
+    def check_visible(self, email: str = "", password: str = ""):
         expect(self.email_input).to_be_visible()
         expect(self.email_input).to_have_value(email)
 

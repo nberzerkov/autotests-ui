@@ -8,7 +8,7 @@ class BaseElement:
 
     def get_locator(self, **kwargs) -> Locator:
         locator = self.locator.format(**kwargs)
-        return self.page.get_by_test_id(locator)  # если нет test-id на проекте, передавай locator и по нему ищи локаторы
+        return self.page.get_by_test_id(locator)  # замени "get_by_test_id" -> "locator" если нет data-test-id на проекте
 
     def click(self, **kwargs):
         locator = self.get_locator(**kwargs)
@@ -20,5 +20,4 @@ class BaseElement:
 
     def check_have_text(self, text: str, **kwargs):
         locator = self.get_locator(**kwargs)
-        expect(locator).to_have_text(text)
-
+        expect(locator).to_have_text(text)   
