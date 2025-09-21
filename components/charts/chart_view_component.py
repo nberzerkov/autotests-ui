@@ -14,3 +14,4 @@ class ChartViewComponent(BaseComponent):
         expect(self.title).to_have_text(title)
 
         expect(self.chart).to_be_visible()
+
