@@ -10,7 +10,7 @@ class RegistrationFormComponent(BaseComponent):
         self.username = Input(page, 'registration-form-username-input', "Username")
         self.password = Input(page, 'registration-form-password-input', "Password")
 
-    def check_visible(self, email: str, username: str, password: str):
+    def check_visible(self, email: str = "", username: str = "", password: str = ""):
         self.email.check_visible()
         self.email.check_have_value(email)
 

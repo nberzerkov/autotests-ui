@@ -23,6 +23,6 @@ class SidebarComponent(BaseComponent):
         self.courses_list_item.navigate_to(re.compile(r".*/#/courses"))
 
     def click_logout(self):
-        self.logout_list_item.navigate_to(re.compile(r".*/#/authentication/login"))
+        self.logout_list_item.navigate_to(re.compile(r".*/#/auth/login"))
 
 
