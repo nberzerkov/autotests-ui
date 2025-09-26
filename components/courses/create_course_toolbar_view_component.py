@@ -10,9 +10,10 @@ class CreateCourseToolbarViewComponent(BaseComponent):
         self.title = Text(page, "create-course-toolbar-title-text", "Title")
         self.create_course_btn = Button(page, "create-course-toolbar-create-course-button", "Create Course btn")
 
-    def check_visible(self, is_create_course_disabled: bool = True):
+    # добавил параметр title_text с дефолтным текстом, потому что когда обновляешь существующий курс, там тайтл уже другой
+    def check_visible(self, is_create_course_disabled: bool = True, title_text: str = "Create course"):
         self.title.check_visible()
-        self.title.check_have_text("Create course")
+        self.title.check_have_text(title_text)
 
         if is_create_course_disabled:
             self.create_course_btn.check_visible()

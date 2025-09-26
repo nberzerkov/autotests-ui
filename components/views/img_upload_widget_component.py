@@ -24,7 +24,7 @@ class ImgUploadWidgetComponent(BaseComponent):
         self.remove_btn = Button(page, f"{identifier}-image-upload-widget-remove-button", "Remove btn")
         self.upload_input = FileInput(page, f"{identifier}-image-upload-widget-input", "Upload input")
 
-    # Методы для работы с блоком загрузки фото и проверка, что img загружен
+    # Метод для работы с блоком загрузки фото и проверка, что img загружен
     def check_visible(self, is_img_uploaded: bool = False):
         self.img_upload_info_icon.check_visible()
 

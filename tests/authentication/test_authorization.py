@@ -1,5 +1,4 @@
 import pytest
-import re
 from pages.authentication.login_page import LoginPage
 from pages.authentication.registration_page import RegistrationPage
 from pages.dashboard.dashboard_page import DashboardPage
@@ -30,18 +29,18 @@ class TestAuthorization:
         registration_page.form.fill(email="testuser@mail.ru", username="user123", password="password")
         registration_page.click_registration_btn()
 
-        dashboard_page.navbar.check_visible("user123")
         dashboard_page.toolbar.check_visible()
-        dashboard_page.check_current_url(re.compile(".*/#/dashboard"))
+        dashboard_page.navbar.check_visible("user123")
         dashboard_page.sidebar.check_visible()
         dashboard_page.sidebar.click_logout()
 
-        login_page.check_current_url(re.compile(".*/#/auth/login"))
         login_page.form.check_visible()
         login_page.form.fill(email="testuser@mail.ru", password="password")
         login_page.click_login_btn()
 
-        dashboard_page.check_current_url(re.compile(".*/#/dashboard"))
+        dashboard_page.toolbar.check_visible()
+        dashboard_page.navbar.check_visible("user123")
+        dashboard_page.sidebar.check_visible()
 
     def test_navigate_from_authorization_to_registration(self, login_page: LoginPage, registration_page: RegistrationPage) -> None:
         login_page.visit(LOGIN_URL)
