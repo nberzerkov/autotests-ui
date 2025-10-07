@@ -8,12 +8,14 @@ email_data = 'user.name@gmail.com'
 username_data = 'nikita'
 password_data = "password"
 
+# Создаем новую страницу
 @pytest.fixture
 def chromium_page(playwright: Playwright) -> Page:
     browser = playwright.chromium.launch(headless=True)
     yield browser.new_page()
     browser.close()
 
+# Инициализируем состояние входа через авторизацию и сохраняем контекст в browser-state.json
 @pytest.fixture(scope='session')
 def initialize_browser_state(playwright: Playwright):
     browser = playwright.chromium.launch(headless=True)
@@ -30,6 +32,7 @@ def initialize_browser_state(playwright: Playwright):
     context.storage_state(path="browser-state.json")
     browser.close()
 
+# Используем эту фикстуру уже с авторизованным состоянием на всех тестах где нужно быть уже авторизованным
 @pytest.fixture
 def chromium_page_with_state(initialize_browser_state, playwright: Playwright) -> Page:
     browser = playwright.chromium.launch(headless=True)

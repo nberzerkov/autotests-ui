@@ -14,6 +14,9 @@ DASHBOARD_URL = "https://nikita-filonov.github.io/qa-automation-engineer-ui-cour
 @allure.epic(AllureEpic.LMS)
 @allure.feature(AllureFeature.DASHBOARD)
 @allure.story(AllureStory.DASHBOARD)
+@allure.parent_suite(AllureEpic.LMS)
+@allure.suite(AllureFeature.DASHBOARD)
+@allure.sub_suite(AllureStory.DASHBOARD)
 class TestDashboard:
     @allure.title("Check displaying of dashboard page")
     def test_dashboard_displaying(self, dashboard_page_with_state: DashboardPage):
