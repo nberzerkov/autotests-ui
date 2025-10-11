@@ -1,12 +1,15 @@
 import pytest
 import allure
-from pages.authentication.login_page import LoginPage
-from pages.authentication.registration_page import RegistrationPage
-from pages.dashboard.dashboard_page import DashboardPage
+
 from tools.allure.tags import AllureTag
 from tools.allure.epics import AllureEpic
 from tools.allure.features import AllureFeature
 from tools.allure.stories import AllureStory
+
+from pages.authentication.login_page import LoginPage
+from pages.dashboard.dashboard_page import DashboardPage
+from pages.authentication.registration_page import RegistrationPage
+
 
 LOGIN_URL = 'https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/auth/login'
 REGISTRATION_URL = 'https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/auth/registration'
