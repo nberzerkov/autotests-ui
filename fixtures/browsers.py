@@ -1,5 +1,8 @@
 import pytest
+import allure
+from _pytest.fixtures import SubRequest
 from playwright.sync_api import Page, Playwright
+
 from pages.authentication.registration_page import RegistrationPage
 
 registration_url = 'https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/auth/registration'
@@ -10,10 +13,19 @@ password_data = "password"
 
 # Создаем новую страницу
 @pytest.fixture
-def chromium_page(playwright: Playwright) -> Page:
+def chromium_page(request: SubRequest, playwright: Playwright) -> Page:
     browser = playwright.chromium.launch(headless=True)
-    yield browser.new_page()
+    context = browser.new_context()
+    context.tracing.start(screenshots=True, snapshots=True, sources=True)
+
+    yield context.new_page()
+
+    context.tracing.stop(path=f'./tracing/{request.node.name}.zip')
+
     browser.close()
+
+    # прикрепляем в allure отчёт наши зипки с trace viewer
+    allure.attach.file(f'./tracing/{request.node.name}.zip', name='trace', extension='zip')
 
 # Инициализируем состояние входа через авторизацию и сохраняем контекст в browser-state.json
 @pytest.fixture(scope='session')
@@ -34,8 +46,16 @@ def initialize_browser_state(playwright: Playwright):
 
 # Используем эту фикстуру уже с авторизованным состоянием на всех тестах где нужно быть уже авторизованным
 @pytest.fixture
-def chromium_page_with_state(initialize_browser_state, playwright: Playwright) -> Page:
+def chromium_page_with_state(request: SubRequest, initialize_browser_state, playwright: Playwright) -> Page:
     browser = playwright.chromium.launch(headless=True)
     context = browser.new_context(storage_state="browser-state.json")
+
+    context.tracing.start(screenshots=True, snapshots=True, sources=True)
+
     yield context.new_page()
+
+    context.tracing.stop(path=f'./tracing/{request.node.name}.zip')
+
     browser.close()
+
+    allure.attach.file(f'./tracing/{request.node.name}.zip', name='trace', extension='zip')
