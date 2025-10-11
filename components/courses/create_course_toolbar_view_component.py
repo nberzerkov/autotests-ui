@@ -1,4 +1,6 @@
+import allure
 from playwright.sync_api import Page
+
 from components.base_component import BaseComponent
 from elements.button import Button
 from elements.text import Text
@@ -10,7 +12,7 @@ class CreateCourseToolbarViewComponent(BaseComponent):
         self.title = Text(page, "create-course-toolbar-title-text", "Title")
         self.create_course_btn = Button(page, "create-course-toolbar-create-course-button", "Create Course btn")
 
-    # добавил параметр title_text с дефолтным текстом, потому что когда обновляешь существующий курс, там тайтл уже другой
+    @allure.step('Checking visible create course toolbar with text {title_text}')
     def check_visible(self, is_create_course_disabled: bool = True, title_text: str = "Create course"):
         self.title.check_visible()
         self.title.check_have_text(title_text)
