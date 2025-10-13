@@ -1,6 +1,7 @@
 import pytest
 import allure
 
+from tools.routes import AppRoute
 from tools.allure.tags import AllureTag
 from tools.allure.epics import AllureEpic
 from tools.allure.features import AllureFeature
@@ -9,10 +10,6 @@ from tools.allure.stories import AllureStory
 from pages.authentication.login_page import LoginPage
 from pages.dashboard.dashboard_page import DashboardPage
 from pages.authentication.registration_page import RegistrationPage
-
-
-LOGIN_URL = 'https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/auth/login'
-REGISTRATION_URL = 'https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/auth/registration'
 
 authCredsParams = [
     ("nikita@mail.ru", "nikita123"),
@@ -34,7 +31,7 @@ class TestAuthorization:
     @allure.tag(AllureTag.USER_LOGIN)
     @allure.title("User login with wrong email or password")
     def test_wrong_email_or_password_authorization(self, login_page: LoginPage, email: str, password: str) -> None:
-        login_page.visit(LOGIN_URL)
+        login_page.visit(AppRoute.LOGIN)
 
         login_page.form.fill(email=email, password=password)
         login_page.click_login_btn()
@@ -43,7 +40,7 @@ class TestAuthorization:
     @allure.tag(AllureTag.USER_LOGIN)
     @allure.title("User login with correct email and password")
     def test_successful_authorization(self, registration_page: RegistrationPage, dashboard_page: DashboardPage, login_page: LoginPage) -> None:
-        registration_page.visit(REGISTRATION_URL)
+        registration_page.visit(AppRoute.REGISTRATION)
 
         registration_page.form.fill(email="testuser@mail.ru", username="user123", password="password")
         registration_page.click_registration_btn()
@@ -64,7 +61,7 @@ class TestAuthorization:
     @allure.tag(AllureTag.NAVIGATION)
     @allure.title("Navigation from login page to registration page")
     def test_navigate_from_authorization_to_registration(self, login_page: LoginPage, registration_page: RegistrationPage) -> None:
-        login_page.visit(LOGIN_URL)
+        login_page.visit(AppRoute.LOGIN)
 
         login_page.click_registration_link()
         registration_page.form.check_visible()

@@ -1,15 +1,16 @@
 import re
 import pytest
 import allure
-from pages.courses.create_course_page import CreateCoursePage
-from pages.courses.courses_list_page import CoursesListPage
+
+from config import settings
+from tools.routes import AppRoute
 from tools.allure.tags import AllureTag
 from tools.allure.epics import AllureEpic
 from tools.allure.features import AllureFeature
 from tools.allure.stories import AllureStory
 
-COURSES_URL = 'https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/courses'
-CREATE_COURSE_URL = "https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/courses/create"
+from pages.courses.create_course_page import CreateCoursePage
+from pages.courses.courses_list_page import CoursesListPage
 
 @pytest.mark.courses
 @pytest.mark.regression
@@ -23,9 +24,9 @@ CREATE_COURSE_URL = "https://nikita-filonov.github.io/qa-automation-engineer-ui-
 class TestCourses:
     @allure.title("Check displaying of empty courses list")
     def test_empty_courses_list(self, courses_list_page: CoursesListPage):
-        courses_list_page.visit(COURSES_URL)
+        courses_list_page.visit(AppRoute.COURSES)
 
-        courses_list_page.navbar.check_visible("nikita")
+        courses_list_page.navbar.check_visible(settings.test_user.username)
         courses_list_page.sidebar.check_visible()
 
         courses_list_page.toolbar.check_visible()
@@ -33,7 +34,7 @@ class TestCourses:
 
     @allure.title("Create course")
     def test_create_course(self, create_course_page: CreateCoursePage, courses_list_page: CoursesListPage):
-        create_course_page.visit(CREATE_COURSE_URL)
+        create_course_page.visit(AppRoute.CREATE_COURSE)
 
         create_course_page.toolbar.check_visible(is_create_course_disabled=True)
 
@@ -44,7 +45,7 @@ class TestCourses:
         create_course_page.exercises_toolbar.check_visible()
         create_course_page.check_visible_exercise_empty_view()
 
-        create_course_page.img_upload_widget.upload_preview_img("./testdata/files/image.png")
+        create_course_page.img_upload_widget.upload_preview_img(settings.test_data.image_png_file)
         create_course_page.img_upload_widget.check_visible(is_img_uploaded=True)
 
         create_course_page.form.fill(title="Playwright", estimate_time="2 week", description="Playwright",
@@ -59,13 +60,13 @@ class TestCourses:
 
     @allure.title("Edit course")
     def test_edit_course(self, create_course_page: CreateCoursePage, courses_list_page: CoursesListPage):
-        create_course_page.visit(CREATE_COURSE_URL)
+        create_course_page.visit(AppRoute.CREATE_COURSE)
 
         create_course_page.form.check_visible()
         create_course_page.form.fill(title="Playwright", estimate_time="2 week", description="Playwright",
                                      max_score="100", min_score="10")
 
-        create_course_page.img_upload_widget.upload_preview_img("./testdata/files/image.png")
+        create_course_page.img_upload_widget.upload_preview_img(settings.test_data.image_png_file)
         create_course_page.img_upload_widget.check_visible(is_img_uploaded=True)
 
         create_course_page.toolbar.click_create_course_btn()

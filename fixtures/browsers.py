@@ -2,13 +2,11 @@ import pytest
 from _pytest.fixtures import SubRequest
 from playwright.sync_api import Page, Playwright
 
-from tools.playwright.pages import initialize_playwright_page
 from config import settings
+from tools.routes import AppRoute
+from tools.playwright.pages import initialize_playwright_page
 
 from pages.authentication.registration_page import RegistrationPage
-
-registration_url = 'https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/auth/registration'
-courses_url = 'https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/courses'
 
 # Создаем новую страницу
 @pytest.fixture
@@ -19,12 +17,12 @@ def chromium_page(request: SubRequest, playwright: Playwright) -> Page:
 @pytest.fixture(scope='session')
 def initialize_browser_state(playwright: Playwright):
     browser = playwright.chromium.launch(headless=settings.headless)
-    context = browser.new_context()
+    context = browser.new_context(base_url=settings.get_base_url())
     page = context.new_page()
 
     registration_page = RegistrationPage(page=page)
 
-    registration_page.visit(registration_url)
+    registration_page.visit(AppRoute.REGISTRATION)
 
     registration_page.form.fill(email=settings.test_user.email, username=settings.test_user.username, password=settings.test_user.password)
     registration_page.click_registration_btn()

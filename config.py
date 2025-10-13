@@ -8,7 +8,7 @@ from pydantic import EmailStr, FilePath, HttpUrl, DirectoryPath, BaseModel
 # если env var в CONFIG_FILE не задан, то по дефолту берёт значение из ".env.local"
 # если нужно на одну команду поменять окружение - CONFIG_FILE=.env.{name_env} python -m config
 # если на сессию, то export CONFIG_FILE=.env.{name_env} и потом python -m config
-config_file = os.getenv("CONFIG_FILE", ".env.local")
+config_file = os.getenv("CONFIG_FILE", ".env")
 
 class Browser(str, Enum):
     CHROMIUM = "chromium"
@@ -25,7 +25,7 @@ class TestData(BaseModel):
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
-        env_file=(".env", config_file),  # приоритет источников данных: переменные окружения -> .env файл -> значения по умолчанию
+        env_file=config_file,  # приоритет источников данных: переменные окружения -> .env файл -> значения по умолчанию
         env_file_encoding='utf-8',
         env_nested_delimiter='.',
     )
@@ -39,7 +39,7 @@ class Settings(BaseSettings):
     tracing_dir: DirectoryPath
     browser_state_file: FilePath
 
-    # если не хочешь морочиться с этим билдером, то просто создай необходимые папки, файлы и создай в них .gitkeep
+    # если не хочешь морочиться с созданием недостающих папок/файлов, то просто создай необходимые сущности и создай в них .gitkeep
     @classmethod
     def initialize(cls) -> Self:
         videos_dir = DirectoryPath("./videos")
@@ -56,6 +56,9 @@ class Settings(BaseSettings):
             tracing_dir=tracing_dir,
             browser_state_file=browser_state_file
         )
+
+    def get_base_url(self) -> str:
+        return f'{self.app_url}/'
 
 
 settings = Settings.initialize()
