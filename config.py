@@ -25,7 +25,7 @@ class TestData(BaseModel):
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
-        env_file=(".env", config_file),
+        env_file=(".env", config_file),  # приоритет источников данных: переменные окружения -> .env файл -> значения по умолчанию
         env_file_encoding='utf-8',
         env_nested_delimiter='.',
     )
@@ -61,21 +61,3 @@ class Settings(BaseSettings):
 settings = Settings.initialize()
 # print(Settings.initialize())
 print("Loaded config file:", config_file)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
