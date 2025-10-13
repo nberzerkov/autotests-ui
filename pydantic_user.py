@@ -7,22 +7,22 @@ class User(BaseModel):
     is_active: bool = True
 
 
-# user_data = {
-#     "id": 1,
+user_data = {
+    "id": 1,
+    "username": "nick",
+    "email": "nickmello@mail.ru",
+}
+
+
+user = User(**user_data)
+print(user)
+
+
+# invalid_user_data = {
+#     "id": 'asd',
 #     "username": "nick",
 #     "email": "nickmello@mail.ru"
 # }
 #
-#
-# user = User(**user_data)
-# print(user)
-
-
-invalid_user_data = {
-    "id": 'asd',
-    "username": "nick",
-    "email": "nickmello@mail.ru"
-}
-
-invalid_user = User(**invalid_user_data)
-print(invalid_user)
+# invalid_user = User(**invalid_user_data)
+# print(invalid_user)
