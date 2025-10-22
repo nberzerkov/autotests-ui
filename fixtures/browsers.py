@@ -9,9 +9,9 @@ from tools.playwright.pages import initialize_playwright_page
 from pages.authentication.registration_page import RegistrationPage
 
 # Создаем новую страницу
-@pytest.fixture
-def chromium_page(request: SubRequest, playwright: Playwright) -> Page:
-    yield from initialize_playwright_page(playwright, test_name=request.node.name)
+@pytest.fixture(params=settings.browser)
+def page(request: SubRequest, playwright: Playwright) -> Page:
+    yield from initialize_playwright_page(playwright, browser_type=request.param, test_name=request.node.name)
 
 # Инициализируем состояние входа через авторизацию и сохраняем контекст в browser-state.json
 @pytest.fixture(scope='session')
@@ -31,6 +31,6 @@ def initialize_browser_state(playwright: Playwright):
     browser.close()
 
 # Используем эту фикстуру уже с авторизованным состоянием на всех тестах где нужно быть уже авторизованным
-@pytest.fixture
-def chromium_page_with_state(request: SubRequest, initialize_browser_state, playwright: Playwright) -> Page:
-    yield from initialize_playwright_page(playwright, test_name=request.node.name, storage_state=settings.browser_state_file)
+@pytest.fixture(params=settings.browser)
+def page_with_state(request: SubRequest, initialize_browser_state, playwright: Playwright) -> Page:
+    yield from initialize_playwright_page(playwright, browser_type=request.param, test_name=request.node.name, storage_state=settings.browser_state_file)
