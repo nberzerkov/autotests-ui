@@ -31,6 +31,8 @@ class TestRegistration:
                         email=settings.test_user.email,
                         username=settings.test_user.username,
                         password=settings.test_user.password)
+
+                # registration_page.page.wait_for_timeout(50000)
                 registration_page.click_registration_btn()
 
                 dashboard_page.toolbar.check_visible()
