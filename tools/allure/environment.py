@@ -1,7 +1,5 @@
 import sys
 import platform
-from pathlib import Path
-from dotenv import dotenv_values
 
 from config import settings
 
