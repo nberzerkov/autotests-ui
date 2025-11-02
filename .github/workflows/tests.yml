@@ -44,7 +44,7 @@ jobs:
         if: always()
         with:
           allure_results: allure-results
-          allure-history: allure-history
+          allure_history: allure-history
 
       - name: Deploy Report to Github Pages
         uses: peaceiris/actions-gh-pages@v2
