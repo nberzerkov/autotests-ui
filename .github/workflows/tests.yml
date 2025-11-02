@@ -46,7 +46,7 @@ jobs:
           allure_results: allure-results
           allure-history: allure-history
 
-      - name: Deploy report to Github Pages
+      - name: Deploy Report to Github Pages
         uses: peaceiris/actions-gh-pages@v2
         env:
           PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
