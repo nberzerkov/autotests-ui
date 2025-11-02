@@ -15,8 +15,6 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
-        with:
-          repository: ${{ github.repository }}
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -34,7 +32,7 @@ jobs:
           pytest -m regression --alluredir=./allure-results --numprocesses 4
 
       - name: Get Allure history
-        uses: action/checkout@v3
+        uses: actions/checkout@v3
         if: always()
         continue-on-error: true
         with:
@@ -42,7 +40,7 @@ jobs:
           path: gh-pages
 
       - name: Allure Repost action from marketplace
-        uses: simple-elf/allure-report-action@1.7
+        uses: simple-elf/allure-report-action@1.7.0
         if: always()
         with:
           allure_results: allure-results
