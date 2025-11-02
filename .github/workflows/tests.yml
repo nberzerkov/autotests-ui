@@ -27,7 +27,7 @@ jobs:
           pip install -r requirements.txt
           playwright install --with-deps
 
-      - name: Run Playwright test with pytest and generate allure results
+      - name: Run Playwright test with pytest and generate Allure results
         run: |
           pytest -m regression --alluredir=./allure-results --numprocesses 4
 
