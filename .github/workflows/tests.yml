@@ -39,8 +39,8 @@ jobs:
           ref: gh-pages
           path: gh-pages
 
-      - name: Allure Repost action from marketplace
-        uses: simple-elf/allure-report-action@master
+      - name: Allure Report action from marketplace
+        uses: simple-elf/allure-report-action@v1.7
         if: always()
         with:
           allure_results: allure-results
