@@ -38,6 +38,7 @@ jobs:
           name: "Allure Results Artifacts"
           path: allure-results
           if-no-files-found: error
+          retention-days: 60
 
   publish-report:
       runs-on: ubuntu-latest

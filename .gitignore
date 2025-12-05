@@ -14,3 +14,6 @@ __pycache__/
 *.json
 videos/
 tracing/
+
+# ci/cd
+.github/workflows
