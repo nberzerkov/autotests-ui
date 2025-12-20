@@ -19,7 +19,7 @@ from pages.dashboard.dashboard_page import DashboardPage
 @allure.suite(AllureFeature.DASHBOARD)
 @allure.sub_suite(AllureStory.DASHBOARD)
 class TestDashboard:
-    @allure.title("Check displaying of dashboard page")
+    @allure.title("Check displaying of dashboard page.")
     def test_dashboard_displaying(self, dashboard_page_with_state: DashboardPage):
         dashboard_page_with_state.visit(AppRoute.DASHBOARD)
 
